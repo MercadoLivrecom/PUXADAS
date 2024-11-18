@@ -1,0 +1,69 @@
+<html lang="pt-br">
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>SAV AWARDS | Pix</title> 
+  <link rel="stylesheet" href="./transaction_pix.css"> 
+  <link rel="preconnect" href="https://fonts.googleapis.com"> 
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""> 
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap" rel="stylesheet"> 
+ </head> 
+ <body> 
+  <!-- Header --> 
+  <header> 
+   <div class="logo"> 
+    <a href="#"> <img src="./lo.png" alt="Logo" draggable="false"> </a> 
+   </div> 
+  </header> 
+  <!-- Header --> 
+  <main> 
+   <div class="pix-container"> 
+    <div class="payment"> 
+     <p>Abra seu aplicativo de pagamento onde você utiliza o Pix e escolha a opção <b>Ler QR Code</b></p> 
+     <div class="qrcode-info"> 
+      <img src="./images/icons/cellphone-icon.svg" draggable="false"> 
+      <span>Aponte a câmera do seu celular</span> 
+     </div> 
+     <div class="qrcode"> 
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQkAAAEJAQMAAAC9pkAnAAAABlBMVEX///8AAABVwtN+AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAC40lEQVRoge1ZQa6rMAx0xSJLjpCblIshgdSLwU04AsssUP1nxrSP/ncBP6lZ0BAGqU7G9tiYfcd3/NnRu/uzf7ive7eVxTrc76O1Ab8tIWQ2u/cHZ0dtd5u84bbaHSsZIQ+smdWy7pPjwWh22w2Q3resEJjVht2sLJzd9hG2JYZwswGp4MgDpInXckLIF+s2mlWbxYPRflEqCyS8kZCPy2+HTQF5mUWq0CIcwIqjuD7NBAE3iu+dt5vPJr7YsOsAxtoSQnyzmz/cYscR9XyxiWt4kBBy0BEnkgYzUgVHcdCi6e2NiSAnX2p54hdhrsN5yBisWT4Iklx59q+9X8EXfyL7gTTTlhGiGDFaobYwxmewHRCutXwQzqQj5IMkOug9kuOWEoJ/T5ZAqk3Ye7JkAK7xYvkg59omKQQTwJK7LhJy6SCIwEWbTbMQRpCxz/jnnhAi+cuLiSCYOZ0TbD9qRghkz43y8gkpBCsQQeiXhFhOiDMW0wepMZGs112za25MA1F+o9DkJTTmnZKYeqglhCjWacel238U/MMTQuLfz/VlhzNPx5olhKiYZ6AY3ixhdUfmvJVHIgicrjDTlZWO6MAhzDEP+o/RmSCzqVhm8FAXgg9GtiI6zwhxFERKzGGMiD6r1qgJIaaKnqcAR5T2kV+S41tCCMX7IhzytCp68eV1FPkgJLUg0sVSm9j7azmXCIJMUpjp1JeKN1DbW7uWUKkgIX/VQZNZqI+sqvXX8kHojayOFYt9YWN1IF/CwHQQU8NP6eRMfBE32FrLCMEBQLxHmSEfjL2/ivxEEIbhQXuPG1dfiuCY5YMEjrqdtp1dv+lTBSWCvHqqjCAWferBpYsv9VEiyBxfW9ipPLV8JJH+ckaJIPoeEN64vfnC2+PSds0FUcAzpZNopGyq6SwrRAUHO5Wh12DgohIvH2SOdi+EJmZMgUx8bFd+ftjMAjm9USwxfWiJ6s7G/x02A+Q7vuNPjn8B2Bzd2iUMRgAAAABJRU5ErkJggg=="> 
+     </div> 
+     <div class="pix-value"> 
+      <span>Valor do Pix:</span> 
+      <strong>R$ 10,00</strong> 
+     </div> 
+     <div class="pix-copy-and-past"> 
+      <span>Você também pode pagar escolhendo a opção <b>Pix Copia e Cola</b> no seu aplicativo de pagamento ou Internet Banking (banco online). Neste caso, copie o código abaixo:</span> 
+      <div class="qrcode-text"> 
+       <img id="copy" src="./copy-icon.svg" alt="Copiar" draggable="false"> 
+       <div id="copied-code">
+        Código copiado.
+       </div> 
+       <p id="qrcode-text">00020126620014br.gov.bcb.pix01225207031@vakinha.com.br0214PUXADAS PREMIO520400005303986540510.005802BR5923PAGAMENTOS PARA PUXADAS6009SAO PAULO62070503***63045EAB</p> 
+      </div> 
+     </div> 
+    </div> 
+   </div> 
+  </main> 
+  <script>
+        document.getElementById('copy').addEventListener('click', function() {
+            var qrcodeText = document.getElementById('qrcode-text');
+            var copiedCodeBox = document.getElementById('copied-code');
+            navigator.clipboard.writeText(qrcodeText.textContent).then(function() {
+                qrcodeText.style.filter = 'blur(1px)';
+
+                copiedCodeBox.style.visibility = 'visible';
+                copiedCodeBox.style.opacity = '0.9';
+                copiedCodeBox.style.transition = 'all 0.3s';
+
+                // remove style after 2s
+                setTimeout(function() {
+                qrcodeText.style.filter = '';
+                copiedCodeBox.style.visibility = '';
+                copiedCodeBox.style.opacity = '';
+                }, 1000);
+            });
+        });
+    </script> 
+ </body>
+</html>

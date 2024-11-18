@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta Cyber</title>
+    <link rel="icon" type="image/png" href="fabicon.png">
+    <meta name="description" content="Consultas gratis">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #1c1c1c;
+            color: #00ff00;
+            overflow-x: hidden;
+        }
+        a {
+            color: #00ff00;
+            text-decoration: none;
+        }
+        header {
+            background-color: #0a0a45;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #ffffff;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        .header-image {
+            max-width: 25px;
+            height: auto;
+        }
+        .header-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 0;
+            color: #ffffff;
+        }
+        .header-buttons {
+            display: flex;
+            gap: 6px;
+        }
+        .header-buttons a {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #ffffff;
+            transition: background-color 0.3s;
+        }
+        .subscribe-button {
+            background-color: #1e90ff;
+        }
+        .subscribe-button:hover {
+            background-color: #1c86ee;
+        }
+        .login-button {
+            background-color: #32cd32;
+        }
+        .login-button:hover {
+            background-color: #2eb82e;
+        }
+        .info-box {
+            background-color: #333333;
+            color: #00ff00;
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            margin: 20px auto;
+        }
+        .query-box, .vip-query-box {
+            background-color: #444444;
+            color: #00ff00;
+            padding: 15px;
+            font-size: 14px;
+            margin-top: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+            word-wrap: break-word;
+            cursor: pointer;
+        }
+        .query-box p, .vip-query-box p {
+            margin: 0;
+            font-size: 14px;
+            max-width: 75%;
+        }
+        .query-button, .vip-query-button {
+            background-color: #1e90ff;
+            color: #fff;
+            padding: 8px 15px;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .query-button:hover, .vip-query-button:hover {
+            background-color: #1c86ee;
+        }
+        .vip-query-button {
+            background-color: #b8860b;
+        }
+        .vip-query-button:hover {
+            background-color: #cd8b2d;
+        }
+        .vip-query-button span {
+            margin-right: 5px;
+        }
+        /* Estilos para a sidebar flutuante */
+        #sidebar {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background-color: #000;
+            transition: 0.3s;
+            padding: 15px;
+            box-sizing: border-box;
+            color: #00ff00;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: 1001;
+        }
+        #sidebar.open {
+            left: 0;
+        }
+        .sidebar-item {
+            color: #00ff00;
+            margin: 10px 0;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .close-btn {
+            color: #ff0000;
+            font-size: 24px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .copyright {
+            color: #00ff00;
+            font-size: 12px;
+            text-align: center;
+            margin-top: auto;
+            padding-top: 20px;
+        }
+        .date-time {
+            font-size: 14px;
+            font-weight: bold;
+            color: #00ff00;
+            text-align: right;
+        }
+        /* Overlay para bloquear a interação */
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none;
+        }
+    </style>
+    <script>
+        function redirectToPage(url) {
+            window.location.href = url;
+        }
+
+        // Função para abrir/fechar a sidebar flutuante
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("open");
+            document.getElementById("overlay").style.display = "block"; // Exibe o overlay
+        }
+
+        // Função para fechar a sidebar
+        function closeSidebar() {
+            document.getElementById("sidebar").classList.remove("open");
+            document.getElementById("overlay").style.display = "none"; // Esconde o overlay
+        }
+
+        // Função para atualizar a data e hora
+        function updateDateTime() {
+            const now = new Date();
+            const date = now.toLocaleDateString('pt-BR');
+            const time = now.toLocaleTimeString('pt-BR');
+            document.getElementById('date-time').textContent = `Data: ${date} | Hora: ${time}`;
+        }
+
+        // Atualiza a data e hora a cada segundo
+        setInterval(updateDateTime, 1000);
+    </script>
+</head>
+<body>
+
+<header>
+    <div class="header-content" onclick="toggleSidebar()">
+        <img src="1.png" alt="Logo Cyber" class="header-image">
+        <h1 class="header-title">Consultas Cyber</h1>
+    </div>
+    <div class="header-buttons">
+        <a href="vip.html" class="subscribe-button">Inscreva-se</a>
+        <a href="x.html" class="login-button">Entrar</a>
+    </div>
+</header>
+
+<!-- Overlay para bloquear interações -->
+<div id="overlay"></div>
+
+
+
+
+<!-- Sidebar flutuante -->
+<div id="sidebar">
+    <span class="close-btn" onclick="closeSidebar()">&#10060;</span>
+    <div class="sidebar-item" onclick="redirectToPage('vip.html')">seu perfil</div>
+    <div class="sidebar-item" onclick="redirectToPage('s.html')">INFORMACOES</div>
+    <div class="sidebar-item" onclick="redirectToPage('s1.html')">GRUPO 09</div>
+    <div class="sidebar-item" onclick="redirectToPage('s2.html')">SUPORTE ONLINE</div>
+
+
+
+
+    <div class="copyright">&copy; 2011 Consultas Cyber. Todos os direitos reservados.</div>
+</div>
+
+<!-- Informações sobre as consultas -->
+<div class="info-box">
+    <h2>Consultas de Dados</h2>
+    <p>Oferecemos consultas gratis para dados basicos. Se precisar de informacoes mais detalhadas, recomendamos nosso plano VIP por apenas R$ 10 ao mes.</p>
+    <div id="date-time" class="date-time"></div> <!-- Data e Hora em tempo real -->
+</div>
+
+
+
+<!-- Consulta gratis 1 -->
+<div class="query-box" onclick="redirectToPage('1.html')">
+
+ <p>consulta de CNPJ gratis para voces nao usem os pontos  somente os numeros</p>
+  <a href="1.html" class="query-button">Gratis</a>
+</div>
+
+
+
+
+
+<div class="query-box" onclick="redirectToPage('2.html')">
+    <p>consulta via CEP consulte os bairros</p>
+    <a href="2.html" class="query-button">Gratis</a>
+</div>
+
+
+
+
+<div class="query-box" onclick="redirectToPage('3.html')">
+    <p>consulta de DDD verifique o estado do DDD do telefone</p>
+    <a href="3.html" class="query-button">Gratis</a>
+</div>
+
+
+
+<div class="query-box" onclick="redirectToPage('4.html')">
+    <p>consulta de dominio de site para inspiracao data de criacao e mais</p>
+    <a href="4.html" class="query-button">Gratis</a>
+</div>
+
+
+
+
+
+<div class="vip-query-box" onclick="redirectToPage('vip.html')">
+    <p>consultar foto com CPF painel federal</p>
+    <a href="vip.html" class="vip-query-button"><span>PREMIUM</span>VIP</a>
+</div>
+
+
+<div class="vip-query-box" onclick="redirectToPage('vip.html')">
+    <p>consultar CPF dados completos atuais 2024 a 2025</p>
+    <a href="vip.html" class="vip-query-button"><span>PREMIUM</span>VIP</a>
+</div>
+
+
+
+<div class="vip-query-box" onclick="redirectToPage('vip.html')">
+    <p>consultar placa de veiculos moto carro consulta Detran Brasil</p>
+    <a href="vip.html" class="vip-query-button"><span>PREMIUM</span>VIP</a>
+</div>
+
+
+<div class="vip-query-box" onclick="redirectToPage('vip.html')">
+    <p>consultar nome retornando resultados completos</p>
+    <a href="vip.html" class="vip-query-button"><span>PREMIUM</span>VIP</a>
+</div>
+
+
+
+<div class="vip-query-box" onclick="redirectToPage('vip.html')">
+    <p>consultar telefone retornando dados atualizados</p>
+    <a href="vip.html" class="vip-query-button"><span>PREMIUM</span>VIP</a>
+</div>
+
+
+<div class="vip-query-box" onclick="redirectToPage('vip.html')">
+    <p>consultar dividas emprestimos dividas receita federal</p>
+    <a href="vip.html" class="vip-query-button"><span>PREMIUM</span>VIP</a>
+</div>
+
+
+
+
+
+<div class="vip-query-box" onclick="redirectToPage('vip.html')">
+    <p>consultar e-mail retornar resultado sobre o e-mail</p>
+    <a href="vip.html" class="vip-query-button"><span>PREMIUM</span>VIP</a>
+</div>
+
+
+<div class="vip-query-box" onclick="redirectToPage('vip.html')">
+    <p>consultar cc retorna resultado sobre o cartao como Bandeira esse esta Live ou nao </p>
+    <a href="vip.html" class="vip-query-button"><span>PREMIUM</span>VIP</a>
+</div>
+
+
+
+<div class="vip-query-box" onclick="redirectToPage('vip.html')">
+    <p>consulta de score via CPF o nome e data de nascimento</p>
+    <a href="vip.html" class="vip-query-button"><span>PREMIUM</span>VIP</a>
+</div>
+
+
+<div class="vip-query-box" onclick="redirectToPage('vip.html')">
+    <p>consultar telefones vinculado ao CPF especifico</p>
+    <a href="vip.html" class="vip-query-button"><span>PREMIUM</span>VIP</a>
+</div>
+
+
+<div class="vip-query-box" onclick="redirectToPage('vip.html')">
+    <p>consultar a chave pix verifique nome banco e CPF </p>
+    <a href="vip.html" class="vip-query-button"><span>PREMIUM</span>VIP</a>
+</div>
+
+
+<div class="vip-query-box" onclick="redirectToPage('vip.html')">
+    <p>consultar saldo do cartao  funcao teste verifica somente se o cartao tem saldo</p>
+    <a href="vip.html" class="vip-query-button"><span>PREMIUM</span>VIP</a>
+</div>
+
+
+
+
+</body>
+</html>

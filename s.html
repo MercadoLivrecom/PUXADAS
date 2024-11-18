@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta Cyber</title>
+    <style>
+        /* Estilo global */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: #00FF00; /* Verde para o texto */
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #00FF00;
+            text-align: left;
+            margin: 10px;
+        }
+
+        /* Container centralizado */
+        .container {
+            max-width: 400px;
+            width: 90%;
+            margin: auto;
+            padding: 20px;
+            background-color: #333;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+            margin-top: 100px;
+        }
+
+        /* Campos de input */
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #222;
+            color: #00FF00;
+            border: 1px solid #00FF00;
+            border-radius: 5px;
+            text-transform: uppercase;
+            box-sizing: border-box; /* Garante que o preenchimento não quebre a largura */
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #00b300;
+        }
+
+        /* Botões */
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #00b300;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        button:hover {
+            background-color: #008f00;
+        }
+
+        .error-message {
+            display: none;
+            background-color: #ff4d4d;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .footer {
+            text-align: center;
+            color: #00FF00;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        /* Estilos de links */
+        a {
+            color: #00FF00;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+
+<h1>Consulta Cyber</h1>
+
+<div class="container">
+    <div class="error-message" id="errorMessage">Erro no login! Tente novamente.</div>
+
+    <form id="loginForm">
+        <input type="text" id="username" placeholder="Usuário" required>
+        <input type="password" id="password" placeholder="Senha" required>
+        
+        <button type="button" id="loginButton">Entrar</button>
+        <button type="button" id="signupButton">Inscreva-se</button>
+        <button type="button" id="continueFreeButton">Continuar Grátis</button>
+    </form>
+</div>
+
+<div class="footer">
+    <p>&copy; 2011 - Todos os direitos reservados.</p>
+</div>
+
+<script>
+    // Função para exibir a mensagem de erro
+    function showError() {
+        document.getElementById('errorMessage').style.display = 'block';
+    }
+
+    // Função para limpar a mensagem de erro
+    function clearError() {
+        document.getElementById('errorMessage').style.display = 'none';
+    }
+
+    // Evento para transformar texto em maiúsculo ao preencher os campos
+    document.getElementById('username').addEventListener('input', function() {
+        this.value = this.value.toUpperCase();
+    });
+    document.getElementById('password').addEventListener('input', function() {
+        this.value = this.value.toUpperCase();
+    });
+
+    // Lógica do botão "Entrar"
+    document.getElementById('loginButton').addEventListener('click', function() {
+        var username = document.getElementById('username').value;
+        var password = document.getElementById('password').value;
+
+        if (username === 'admin' && password === '1234') {
+            window.location.href = 'index.html'; // Redireciona para o site principal em caso de login bem-sucedido
+        } else {
+            showError(); // Exibe a mensagem de erro se o login falhar
+        }
+    });
+
+    // Lógica do botão "Inscreva-se"
+    document.getElementById('signupButton').addEventListener('click', function() {
+        window.location.href = 'vip.html'; // Redireciona para a página vip.html
+    });
+
+    // Lógica do botão "Continuar Grátis"
+    document.getElementById('continueFreeButton').addEventListener('click', function() {
+        window.location.href = 'index.html'; // Redireciona para o index.html
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Cadastro - Consulta Cyber</title>
+    <style>
+        /* Estilo global */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: #00FF00; /* Verde para o texto */
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #00FF00;
+            text-align: left;
+            margin: 20px;
+        }
+
+        /* Container centralizado */
+        .container {
+            max-width: 600px;
+            width: 90%;
+            margin: auto;
+            padding: 20px;
+            background-color: #333;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+            margin-top: 50px;
+        }
+
+        /* Exibição dos dados */
+        .info {
+            margin-bottom: 15px;
+        }
+
+        .info p {
+            font-size: 18px;
+            margin: 5px 0;
+        }
+
+        .info p span {
+            font-weight: bold;
+            color: #00b300;
+        }
+
+        /* Lista de consultas */
+        .consultas {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #444;
+            border-radius: 8px;
+            color: #00b300;
+        }
+
+        .consultas ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .consultas li {
+            margin: 8px 0;
+        }
+
+        /* Botão Finalizar Cadastro */
+        .finalizar-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #00b300;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        /* Estilo da mensagem flutuante */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding-top: 100px;
+            text-align: center;
+        }
+
+        .modal-content {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 8px;
+            color: #00FF00;
+            width: 50%;
+            margin: auto;
+        }
+
+        .modal-btn {
+            padding: 10px 20px;
+            background-color: #00FF00;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .footer {
+            text-align: center;
+            color: #00FF00;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+    </style>
+</head>
+<body>
+
+<h1>Detalhes do Cadastro - Consulta Cyber</h1>
+
+<div class="container">
+    <div class="info">
+        <p><span>E-mail de Recuperação:</span> <span id="email"></span></p>
+        <p><span>Chave de Recuperação:</span> <span id="recoveryKey"></span></p>
+        <p><span>Usuário:</span> <span id="username"></span></p>
+        <p><span>Senha:</span> <span id="password"></span></p>
+        <p><span>Confirmar Senha:</span> <span id="confirmPassword"></span></p>
+        <p><span>Data de Expiração do Plano:</span> <span id="expirationDate"></span></p>
+        <p><span>Valor do Plano:</span> <span id="planValue"></span></p>
+        <p><span>Detalhes do Plano:</span> <span id="planDetails"></span></p>
+    </div>
+
+    <!-- Lista de Consultas Liberadas -->
+    <div class="consultas">
+        <h2>Consultas Liberadas:</h2>
+        <ul>
+            <li>Consulta de CPF</li>
+            <li>Consulta de Nome</li>
+            <li>Consulta de Placa de Veículo</li>
+            <li>Consulta de Foto</li>
+            <li>Consulta de CNH</li>
+            <li>Consulta de Multas</li>
+            <li>Consulta de Ficha Criminal</li>
+            <li>Consulta de Telefone</li>
+            <li>Consulta de E-mail</li>
+            <li>Consulta de Saldo de Cartões</li>
+            <li>Consulta de Logins</li>
+            <li>Consulta de Endereço Completo</li>
+            <li>Consulta de Redes Sociais</li>
+            <li>Consulta de Histórico de Compras</li>
+        </ul>
+    </div>
+
+    <!-- Botão para finalizar o cadastro -->
+    <button class="finalizar-btn" onclick="finalizarCadastro()">Finalizar Cadastro</button>
+</div>
+
+<!-- Modal para mensagem flutuante -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <p>Você será redirecionado para a área de pagamento para a ativação da sua conta. O pagamento é referente a R$ 10 para ativação imediata.</p>
+        <button class="modal-btn" onclick="redirectToPayment()">OK</button>
+    </div>
+</div>
+
+<div class="footer">
+    <p>&copy; 2011 - Todos os direitos reservados.</p>
+</div>
+
+<script>
+    // Função para obter parâmetros da URL
+    function getQueryParam(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+    }
+
+    // Preencher informações na página
+    document.getElementById('email').textContent = getQueryParam('email') || 'Não disponível';
+    document.getElementById('recoveryKey').textContent = getQueryParam('recoveryKey') || 'Não disponível';
+    document.getElementById('username').textContent = getQueryParam('username') || 'Não disponível';
+    document.getElementById('password').textContent = getQueryParam('password') || 'Não disponível';
+    document.getElementById('confirmPassword').textContent = getQueryParam('confirmPassword') || 'Não disponível';
+    document.getElementById('expirationDate').textContent = getQueryParam('expirationDate') || 'Não disponível';
+    document.getElementById('planValue').textContent = getQueryParam('planValue') || 'Não disponível';
+    document.getElementById('planDetails').textContent = getQueryParam('planDetails') || 'Não disponível';
+
+    // Função para exibir o modal
+    function finalizarCadastro() {
+        document.getElementById('modal').style.display = 'block';
+    }
+
+    // Função para redirecionar para a página de pagamento
+    function redirectToPayment() {
+        window.location.href = "pagamento.html"; // Redireciona para a página de pagamento
+    }
+</script>
+
+</body>
+</html>
